@@ -1,0 +1,31 @@
+{
+  "name": "pitchpdf",
+  "version": "1.0.0",
+  "description": "Professional proposal generator for freelancers and businesses.",
+  "main": "index.js",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mr-vishist/pitchPDF.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mr-vishist/pitchPDF/issues"
+  },
+  "homepage": "https://github.com/mr-vishist/pitchPDF#readme",
+  "dependencies": {
+    "firebase": "^12.8.0",
+    "html2pdf.js": "^0.14.0",
+    "next": "^16.1.4",
+    "pdfkit": "^0.17.2",
+    "react": "^19.2.3",
+    "react-dom": "^19.2.3"
+  }
+}

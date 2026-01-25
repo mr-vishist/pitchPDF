@@ -1,0 +1,200 @@
+.container {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--bg-secondary);
+    padding: var(--space-base);
+}
+
+.card {
+    background: var(--bg-primary);
+    border-radius: var(--space-base);
+    padding: var(--space-lg);
+    width: 100%;
+    max-width: 420px;
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
+    border: 1px solid var(--border);
+}
+
+.logo {
+    font-size: 20px;
+    font-weight: var(--fw-bold);
+    color: var(--text-primary);
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    margin-bottom: var(--space-md);
+}
+
+.logoIcon {
+    width: 8px;
+    height: 8px;
+    background: var(--primary);
+    border-radius: 50%;
+}
+
+.title {
+    font-size: var(--h3);
+    font-weight: var(--fw-semi);
+    color: var(--text-primary);
+    margin: 0 0 var(--space-sm) 0;
+}
+
+.subtitle {
+    font-size: var(--body);
+    font-weight: var(--fw-reg);
+    color: var(--text-secondary);
+    margin: 0 0 var(--space-md) 0;
+    line-height: 1.6;
+}
+
+.error {
+    background: var(--error-bg);
+    border: 1px solid var(--error-border);
+    color: var(--error-text);
+    padding: var(--space-sm) var(--space-base);
+    border-radius: var(--space-sm);
+    margin-bottom: var(--space-base);
+    font-size: var(--body-sm);
+    font-weight: var(--fw-reg);
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-base);
+}
+
+.inputGroup {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+}
+
+.label {
+    font-size: var(--body-sm);
+    font-weight: var(--fw-med);
+    color: var(--text-primary);
+}
+
+.input {
+    padding: var(--space-sm) var(--space-base);
+    border: 1px solid var(--border);
+    border-radius: var(--space-sm);
+    font-family: var(--font-primary);
+    font-size: var(--body);
+    font-weight: var(--fw-reg);
+    transition: border-color 0.2s, box-shadow 0.2s;
+    outline: none;
+    background: var(--bg-primary);
+}
+
+.input:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
+}
+
+.input:disabled {
+    background: var(--bg-secondary);
+    cursor: not-allowed;
+}
+
+.input::placeholder {
+    font-size: var(--body-sm);
+    font-weight: var(--fw-reg);
+    color: var(--text-muted);
+    opacity: 0.6;
+}
+
+.button {
+    background: var(--primary);
+    color: white;
+    padding: var(--space-sm) var(--space-base);
+    border: none;
+    border-radius: var(--space-sm);
+    font-family: var(--font-primary);
+    font-size: var(--body);
+    font-weight: var(--fw-semi);
+    letter-spacing: 0.3px;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.2s;
+    margin-top: var(--space-sm);
+}
+
+.button:hover:not(:disabled) {
+    background: var(--primary-hover);
+    transform: translateY(-1px);
+}
+
+.button:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+}
+
+.divider {
+    display: flex;
+    align-items: center;
+    gap: var(--space-base);
+    margin: var(--space-md) 0;
+    color: var(--text-muted);
+    font-size: var(--body-sm);
+}
+
+.divider::before,
+.divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+}
+
+.googleButton {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-sm);
+    width: 100%;
+    padding: var(--space-sm) var(--space-base);
+    background: var(--bg-primary);
+    border: 1px solid var(--border);
+    border-radius: var(--space-sm);
+    font-family: var(--font-primary);
+    font-size: var(--body);
+    font-weight: var(--fw-med);
+    color: var(--text-primary);
+    cursor: pointer;
+    transition: background 0.2s, border-color 0.2s;
+}
+
+.googleButton:hover:not(:disabled) {
+    background: var(--bg-secondary);
+    border-color: var(--border-hover);
+}
+
+.googleButton:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+}
+
+.googleIcon {
+    width: 20px;
+    height: 20px;
+}
+
+.footer {
+    text-align: center;
+    margin-top: var(--space-md);
+    color: var(--text-secondary);
+    font-size: var(--body-sm);
+}
+
+.link {
+    color: var(--primary);
+    font-weight: var(--fw-med);
+    text-decoration: none;
+}
+
+.link:hover {
+    text-decoration: underline;
+}
