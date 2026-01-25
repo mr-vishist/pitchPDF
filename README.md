@@ -1,0 +1,1 @@
+Professional proposal generator for freelancers and businesses.
