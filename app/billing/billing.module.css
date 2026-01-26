@@ -1,0 +1,221 @@
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+}
+
+.card {
+    background: var(--bg-primary);
+    padding: 2rem;
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.cardTitle {
+    margin: 0 0 1rem 0;
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.price {
+    font-size: 2rem;
+    font-weight: 700;
+    margin: 0 0 1rem 0;
+    color: var(--text-primary);
+}
+
+.period {
+    font-size: 1rem;
+    font-weight: 400;
+    color: var(--text-secondary);
+}
+
+.features {
+    padding-left: 1.2rem;
+    margin-bottom: 2rem;
+    color: var(--text-secondary);
+}
+
+.features li {
+    margin-bottom: 0.5rem;
+}
+
+.button {
+    width: 100%;
+    padding: 0.75rem;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+    color: var(--text-primary);
+    transition: all 0.2s;
+}
+
+.button:hover {
+    border-color: var(--primary);
+    color: var(--primary);
+}
+
+/* Premium/Unlimited Card Styling */
+.premiumCard {
+    background: #000;
+    color: white;
+    border: 1px solid #000;
+}
+
+/* In dark mode, keep it distinct or blend? 
+   If we want it to always be black/distinct: */
+[data-theme='dark'] .premiumCard {
+    background: linear-gradient(135deg, #111827 0%, #000 100%);
+    border: 1px solid #374151;
+}
+
+.premiumCard .cardTitle,
+.premiumCard .price,
+.premiumCard .features,
+.premiumCard .period {
+    color: white;
+    /* Forced white text for premium card */
+}
+
+.premiumCard .features {
+    color: #ccc;
+}
+
+.premiumButton {
+    width: 100%;
+    padding: 0.75rem;
+    background: white;
+    color: black;
+    border: none;
+    border-radius: 6px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: opacity 0.2s;
+}
+
+.premiumButton:hover {
+    opacity: 0.9;
+}
+
+.section {
+    margin-bottom: 3rem;
+}
+
+.sectionTitle {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+    color: var(--text-primary);
+}
+
+.planBanner {
+    background: var(--bg-primary);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.planName {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 0.5rem;
+}
+
+.activeBadge {
+    font-size: 0.8rem;
+    background: #dcfce7;
+    color: #166534;
+    padding: 0.25rem 0.75rem;
+    border-radius: 20px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+}
+
+[data-theme='dark'] .activeBadge {
+    background: rgba(16, 185, 129, 0.2);
+    color: #34d399;
+}
+
+.planDetails {
+    color: var(--text-secondary);
+    font-size: 1rem;
+}
+
+.upgradeButton {
+    background: var(--primary);
+    color: white;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    font-weight: 600;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 0.95rem;
+}
+
+.cancelButton {
+    background: transparent;
+    color: var(--error-text);
+    border: 1px solid var(--error-border);
+    padding: 0.75rem 1.5rem;
+    font-weight: 600;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 0.95rem;
+    transition: all 0.2s;
+}
+
+.cancelButton:hover {
+    background: var(--error-bg);
+}
+
+/* History Table */
+.historyTable {
+    background: var(--bg-primary);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.historyHeader {
+    display: grid;
+    grid-template-columns: 1fr 2fr 1fr 1fr;
+    padding: 1rem 1.5rem;
+    background: var(--bg-secondary);
+    border-bottom: 1px solid var(--border);
+    font-weight: 600;
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+}
+
+.historyRow {
+    display: grid;
+    grid-template-columns: 1fr 2fr 1fr 1fr;
+    padding: 1rem 1.5rem;
+    border-bottom: 1px solid var(--border);
+    color: var(--text-primary);
+    font-size: 0.95rem;
+    align-items: center;
+}
+
+.historyRow:last-child {
+    border-bottom: none;
+}

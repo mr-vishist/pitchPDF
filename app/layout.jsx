@@ -1,4 +1,5 @@
 import './globals.css';
+import { ThemeProvider } from '@/components/ThemeProvider';
 
 export const metadata = {
     title: 'pitchPDF',
@@ -8,7 +9,11 @@ export const metadata = {
 export default function RootLayout({ children }) {
     return (
         <html lang="en">
-            <body suppressHydrationWarning>{children}</body>
+            <body suppressHydrationWarning>
+                <ThemeProvider>
+                    {children}
+                </ThemeProvider>
+            </body>
         </html>
     );
 }

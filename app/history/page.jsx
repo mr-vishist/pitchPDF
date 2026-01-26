@@ -1,18 +1,15 @@
 'use client';
 
-import { useAuthGuard, AuthLoading } from '@/utils/authGuard';
+import AuthenticatedLayout from '@/components/AuthenticatedLayout';
 
 export default function HistoryPage() {
-    const { user, loading } = useAuthGuard();
-
-    if (loading) {
-        return <AuthLoading />;
-    }
-
     return (
-        <div style={{ padding: '2rem' }}>
-            <h1>Proposal History</h1>
-            <p>This page is protected. User: {user?.email}</p>
-        </div>
+        <AuthenticatedLayout title="Proposal History">
+            <div className="card">
+                <div style={{ textAlign: 'center', padding: '2rem' }}>
+                    <p style={{ color: '#666' }}>No proposals history found.</p>
+                </div>
+            </div>
+        </AuthenticatedLayout>
     );
 }

@@ -228,6 +228,22 @@
         0 12px 24px rgba(0, 0, 0, 0.04);
 }
 
+/* Print Container for PDF Export */
+.printContainer {
+    min-height: 100vh;
+    background: #ffffff;
+    display: flex;
+    justify-content: center;
+    padding: 0;
+}
+
+.printContainer .proposal {
+    max-width: 100%;
+    width: 100%;
+    border-radius: 0;
+    box-shadow: none;
+}
+
 /* ----------------------------------------
    HERO SECTION
    ---------------------------------------- */
@@ -642,6 +658,36 @@
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
+}
+
+.identityStack {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.identityName {
+    font-size: 15px;
+    font-weight: 700;
+    color: #1c1917;
+    margin: 0;
+    line-height: 1.2;
+}
+
+.identityEmail {
+    font-size: 13px;
+    font-weight: 500;
+    color: #4b5563;
+    margin: 0;
+    line-height: 1.4;
+}
+
+.identityPhone {
+    font-size: 13px;
+    font-weight: 400;
+    color: #94a3b8;
+    margin: 0;
+    line-height: 1.4;
 }
 
 .signatureBox {

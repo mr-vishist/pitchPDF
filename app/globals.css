@@ -49,6 +49,21 @@
     --space-major: 64px;
 }
 
+[data-theme='dark'] {
+    --primary: #10b981;
+    --primary-hover: #34d399;
+    --text-primary: #f9fafb;
+    --text-secondary: #d1d5db;
+    --text-muted: #9ca3af;
+    --bg-primary: #111827;
+    --bg-secondary: #0b0f19;
+    --border: #374151;
+    --border-hover: #4b5563;
+    --error-bg: #450a0a;
+    --error-border: #7f1d1d;
+    --error-text: #fca5a5;
+}
+
 body {
     font-family: var(--font-primary);
     font-size: var(--body);

@@ -3,7 +3,14 @@
 import { useState, useRef } from 'react';
 import styles from './generate.module.css';
 
+// Import auth
+import { useAuthGuard } from '@/utils/authGuard';
+import PaywallModal from '@/components/PaywallModal';
+
 export default function GeneratePage() {
+    const { user } = useAuthGuard(); // Get current user
+    const [isPaywallOpen, setIsPaywallOpen] = useState(false);
+
     const [formData, setFormData] = useState({
         clientName: '',
         clientCompany: '',
@@ -26,42 +33,85 @@ export default function GeneratePage() {
     };
 
     const handleGeneratePreview = () => {
-        // Preview updates in real-time, this could trigger additional formatting
         console.log('Preview generated with data:', formData);
     };
 
     const proposalRef = useRef(null);
+    const [isExporting, setIsExporting] = useState(false);
 
-    const handleExport = async () => {
-        if (!proposalRef.current) return;
-
-        const btn = document.getElementById('exportBtn');
-        if (btn) {
-            btn.textContent = 'Generating...';
-            btn.disabled = true;
+    const checkEntitlement = async () => {
+        if (!user) return false;
+        try {
+            const res = await fetch('/api/check-entitlement', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ uid: user.uid })
+            });
+            const data = await res.json();
+            return data.allowed;
+        } catch (e) {
+            console.error('Entitlement check failed', e);
+            return false;
         }
+    };
+
+    const handleExport = async (bypassCheck = false) => {
+        if (isExporting) return;
+        setIsExporting(true);
 
         try {
-            const html2pdf = (await import('html2pdf.js')).default;
-            const element = proposalRef.current;
-            const opt = {
-                margin: [10, 0, 10, 0],
-                filename: `Proposal_${formData.clientName ? formData.clientName.replace(/\s+/g, '_') : 'Draft'}.pdf`,
-                image: { type: 'jpeg', quality: 0.98 },
-                html2canvas: { scale: 2, useCORS: true, letterRendering: true },
-                jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
-            };
+            // 1. Check Entitlement (unless bypassed after successful payment)
+            if (!bypassCheck) {
+                const isAllowed = await checkEntitlement();
+                if (!isAllowed) {
+                    setIsPaywallOpen(true);
+                    setIsExporting(false);
+                    return;
+                }
+            }
 
-            await html2pdf().set(opt).from(element).save();
+            // 2. Generate PDF
+            const response = await fetch('/api/export-pdf', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    formData,
+                    uid: user?.uid // Pass UID for server-side verification/deduction
+                }),
+            });
+
+            if (!response.ok) {
+                const errData = await response.json();
+                if (errData.error === 'Payment required') {
+                    setIsPaywallOpen(true);
+                    return;
+                }
+                throw new Error('PDF generation failed');
+            }
+
+            const blob = await response.blob();
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `Proposal_${formData.clientName ? formData.clientName.replace(/\s+/g, '_') : 'Draft'}.pdf`;
+            document.body.appendChild(a);
+            a.click();
+            window.URL.revokeObjectURL(url);
+            document.body.removeChild(a);
+
         } catch (err) {
             console.error('Export failed:', err);
             alert('PDF Export failed. Please try again.');
         } finally {
-            if (btn) {
-                btn.textContent = 'Export PDF';
-                btn.disabled = false;
-            }
+            setIsExporting(false);
         }
+    };
+
+    const onPaymentSuccess = () => {
+        // Bypass client-side check since we just verified payment on server
+        handleExport(true);
     };
 
     const today = new Date().toLocaleDateString('en-US', {
@@ -72,6 +122,13 @@ export default function GeneratePage() {
 
     return (
         <div className={styles.container}>
+            <PaywallModal
+                isOpen={isPaywallOpen}
+                onClose={() => setIsPaywallOpen(false)}
+                userId={user?.uid}
+                onPaymentSuccess={onPaymentSuccess}
+            />
+
             {/* Header */}
             <header className={styles.header}>
                 <div className={styles.headerLeft}>
@@ -81,21 +138,17 @@ export default function GeneratePage() {
                     <h1 className={styles.pageTitle}>Generate Proposal</h1>
                 </div>
                 <div className={styles.headerActions}>
-                    <button className={styles.secondaryButton} disabled>
-                        Save Draft
-                    </button>
+
                     <button
-                        id="exportBtn"
-                        className={styles.secondaryButton}
-                        onClick={handleExport}
+                        className={styles.primaryButton}
+                        onClick={() => handleExport()}
+                        disabled={isExporting}
                     >
-                        Export PDF
-                    </button>
-                    <button className={styles.primaryButton} onClick={handleGeneratePreview}>
-                        Generate Preview
+                        {isExporting ? 'Generating...' : 'Generate PDF'}
                     </button>
                 </div>
             </header>
+
 
             {/* Main Content */}
             <div className={styles.main}>
@@ -245,10 +298,6 @@ export default function GeneratePage() {
                             <div className={styles.heroSection}>
                                 <div className={styles.heroOverlay}></div>
                                 <div className={styles.heroContent}>
-                                    <div className={styles.heroBrand}>
-                                        <span className={styles.brandDot}></span>
-                                        <span className={styles.brandName}>pitchPDF</span>
-                                    </div>
                                     <h1 className={styles.heroTitle}>
                                         {formData.projectTitle || 'Project Proposal'}
                                     </h1>
@@ -375,9 +424,20 @@ export default function GeneratePage() {
                                 <div className={styles.footerContent}>
                                     <div className={styles.footerLeft}>
                                         <span className={styles.panelLabel}>Prepared By</span>
-                                        <p className={styles.footerContact}>
-                                            {formData.contactInfo || 'Your Name\nCompany\ncontact@email.com'}
-                                        </p>
+                                        {(() => {
+                                            const contactLines = (formData.contactInfo || 'Your Name\ncontact@email.com\n555-0123').split('\n');
+                                            const name = contactLines[0] || '';
+                                            const email = contactLines[1] || '';
+                                            const phone = contactLines[2] || '';
+
+                                            return (
+                                                <div className={styles.identityStack}>
+                                                    <p className={styles.identityName}>{name}</p>
+                                                    {email && <p className={styles.identityEmail}>{email}</p>}
+                                                    {phone && <p className={styles.identityPhone}>{phone}</p>}
+                                                </div>
+                                            );
+                                        })()}
                                     </div>
                                     <div className={styles.footerRight}>
                                         <div className={styles.signatureBox}>
@@ -385,10 +445,6 @@ export default function GeneratePage() {
                                             <span className={styles.signatureLabel}>Authorized Signature</span>
                                         </div>
                                     </div>
-                                </div>
-                                <div className={styles.footerBottom}>
-                                    <span className={styles.footerLogoMark}>p</span>
-                                    <span className={styles.footerBrandText}>pitchPDF Premium Document</span>
                                 </div>
                             </div>
                         </div>

@@ -439,7 +439,7 @@
     width: 100%;
     padding: var(--space-sm);
     background: var(--text-primary);
-    color: white;
+    color: var(--bg-primary);
     border: none;
     border-radius: var(--space-sm);
     font-family: var(--font-primary);
