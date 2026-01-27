@@ -1,9 +1,8 @@
-'use client';
-
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { onAuthStateChanged } from 'firebase/auth';
-import { auth } from '@/firebase/firebase';
+import { useAuth } from '@/context/AuthContext';
+// import { onAuthStateChanged } from 'firebase/auth'; // No longer needed here
+// import { auth } from '@/firebase/firebase'; // No longer needed here
 
 /**
  * Auth guard hook for protecting routes
@@ -13,25 +12,17 @@ import { auth } from '@/firebase/firebase';
  */
 export function useAuthGuard() {
     const router = useRouter();
-    const [user, setUser] = useState(null);
-    const [loading, setLoading] = useState(true);
+    const { user, loading } = useAuth();
+    const [isRedirecting, setIsRedirecting] = useState(false);
 
     useEffect(() => {
-        const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-            if (!currentUser) {
-                // Not logged in - redirect to login
-                router.push('/login');
-            } else {
-                // Logged in - allow access
-                setUser(currentUser);
-            }
-            setLoading(false);
-        });
+        if (!loading && !user && !isRedirecting) {
+            setIsRedirecting(true);
+            router.push('/login');
+        }
+    }, [user, loading, router, isRedirecting]);
 
-        return () => unsubscribe();
-    }, [router]);
-
-    return { user, loading };
+    return { user, loading: loading || isRedirecting };
 }
 
 /**
@@ -44,13 +35,14 @@ export function AuthLoading() {
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            background: '#f8f9fa'
+            background: 'var(--bg-primary)',
+            color: 'var(--text-primary)'
         }}>
             <div style={{
                 width: '32px',
                 height: '32px',
-                border: '3px solid #e5e7eb',
-                borderTopColor: '#10b981',
+                border: '3px solid var(--border)',
+                borderTopColor: 'var(--primary)',
                 borderRadius: '50%',
                 animation: 'spin 0.8s linear infinite'
             }} />

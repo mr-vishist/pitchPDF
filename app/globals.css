@@ -47,6 +47,22 @@
     --space-lg: 32px;
     --space-section: 48px;
     --space-major: 64px;
+
+    /* Landing Page Theme Colors */
+    --teal-dark: #0D3C40;
+    --teal-medium: #1A5F62;
+    --teal-light: #2B7A7E;
+    --green-light: #D4F4DD;
+    --green-accent: #A8E6B3;
+    --green-medium: #7BC98C;
+    --black-rich: #0A0A0A;
+    --gray-light: #F5F7F9;
+    --gray-medium: #E1E4E8;
+
+    /* Shadows */
+    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.12);
+    --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+    --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.15);
 }
 
 [data-theme='dark'] {
@@ -110,4 +126,88 @@ h4,
 .h4 {
     font-size: var(--h4);
     font-weight: var(--fw-semi);
+}
+
+/* Animations */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideInLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes float {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+/* Utility Classes */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 var(--space-md);
+}
+
+.section {
+    padding: var(--space-major) 0;
+}
+
+.btn {
+    padding: 12px 24px;
+    border-radius: 6px;
+    font-weight: var(--fw-semi);
+    font-size: var(--body);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: none;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.btn-primary {
+    background: var(--primary);
+    color: white;
+}
+
+.btn-primary:hover {
+    background: var(--primary-hover);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+    text-decoration: none;
+}
+
+.btn-secondary {
+    background: white;
+    color: var(--teal-dark);
+    border: 2px solid var(--teal-dark);
+}
+
+.btn-secondary:hover {
+    background: var(--teal-dark);
+    color: white;
+    text-decoration: none;
 }

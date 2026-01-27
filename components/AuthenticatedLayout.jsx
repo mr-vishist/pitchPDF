@@ -7,6 +7,7 @@ import { signOut } from 'firebase/auth';
 import { auth } from '@/firebase/firebase';
 import { useAuthGuard, AuthLoading } from '@/utils/authGuard';
 import { useTheme } from '@/components/ThemeProvider';
+import ThemeToggle from '@/components/ThemeToggle';
 import styles from '../app/dashboard/dashboard.module.css';
 
 export default function AuthenticatedLayout({ children, title, subtitle, actions }) {
@@ -33,7 +34,7 @@ export default function AuthenticatedLayout({ children, title, subtitle, actions
         setTheme(theme === 'dark' ? 'light' : 'dark');
     };
 
-    if (!mounted || loading) {
+    if (loading) {
         return <AuthLoading />;
     }
 
@@ -78,10 +79,6 @@ export default function AuthenticatedLayout({ children, title, subtitle, actions
                             <span className={styles.navIcon}>⚙️</span>
                             Account
                         </Link>
-                        <button onClick={toggleTheme} className={styles.navItem}>
-                            <span className={styles.navIcon}>{theme === 'dark' ? '☀️' : '🌙'}</span>
-                            {theme === 'dark' ? 'Light Mode' : 'Dark Mode'}
-                        </button>
                         <button onClick={handleLogout} className={styles.navItem}>
                             <span className={styles.navIcon}>🚪</span>
                             Logout
@@ -103,6 +100,7 @@ export default function AuthenticatedLayout({ children, title, subtitle, actions
                         />
                     </div>
                     <div className={styles.headerRight}>
+                        <ThemeToggle />
                         <Link href="/account" className={styles.userInfo}>
                             <div className={styles.avatar}>
                                 {userName.charAt(0).toUpperCase()}

@@ -227,7 +227,6 @@ export default function AccountPage() {
 
                         <div className={styles.securityHeader}>
                             <div>
-                                <h3 className={styles.passwordTitle}>Password</h3>
                                 <p className={styles.description}>
                                     Secure your account by updating your password regularly.
                                 </p>

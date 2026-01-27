@@ -1,0 +1,187 @@
+.aboutPage {
+    min-height: 100vh;
+    background: #ffffff;
+}
+
+/* Navigation */
+.nav {
+    background: #ffffff;
+    border-bottom: 1px solid var(--gray-medium);
+    padding: var(--space-base) 0;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: var(--shadow-sm);
+}
+
+.navContent {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: var(--space-md);
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 24px;
+    font-weight: var(--fw-bold);
+    color: var(--teal-dark);
+    text-decoration: none;
+}
+
+.logoIcon {
+    width: 32px;
+    height: 32px;
+    display: block;
+}
+
+.navLinks {
+    display: flex;
+    list-style: none;
+    gap: var(--space-lg);
+    margin: 0;
+}
+
+.navLinks a {
+    color: #1a1a1a;
+    font-weight: var(--fw-med);
+    transition: color 0.3s ease;
+    text-decoration: none;
+}
+
+.navLinks a:hover {
+    color: var(--primary);
+    text-decoration: none;
+}
+
+.navActions {
+    display: flex;
+    align-items: center;
+    gap: var(--space-base);
+}
+
+
+/* Content */
+.content {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.content h1 {
+    font-size: 48px;
+    color: #1a1a1a;
+    margin-bottom: var(--space-base);
+}
+
+.lead {
+    font-size: var(--body-lg);
+    color: #4a5568;
+    margin-bottom: var(--space-major);
+}
+
+.story {
+    margin-bottom: var(--space-major);
+}
+
+.story h2,
+.values h2 {
+    font-size: var(--h2);
+    color: #1a1a1a;
+    margin-bottom: var(--space-md);
+}
+
+.story p {
+    color: #4a5568;
+    line-height: 1.8;
+    margin-bottom: var(--space-base);
+}
+
+.valuesGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: var(--space-md);
+}
+
+.valueCard {
+    padding: var(--space-md);
+    background: var(--gray-light);
+    border-radius: 8px;
+}
+
+.valueCard h3 {
+    font-size: var(--h4);
+    margin-bottom: var(--space-sm);
+}
+
+.valueCard p {
+    color: #4a5568;
+    margin: 0;
+}
+
+@media (max-width: 968px) {
+    .navContent {
+        flex-direction: column;
+        gap: var(--space-base);
+    }
+
+    .navLinks {
+        flex-direction: column;
+        gap: var(--space-sm);
+        text-align: center;
+    }
+}
+
+/* Dark Mode Overrides */
+[data-theme='dark'] .aboutPage {
+    background: var(--bg-primary);
+}
+
+[data-theme='dark'] .nav {
+    background: var(--bg-secondary);
+    border-bottom-color: var(--border);
+}
+
+[data-theme='dark'] .logo {
+    color: var(--primary);
+}
+
+[data-theme='dark'] .navLinks a {
+    color: var(--text-primary);
+}
+
+[data-theme='dark'] .navLinks a:hover {
+    color: var(--primary);
+}
+
+
+[data-theme='dark'] .content h1 {
+    color: var(--text-primary);
+}
+
+[data-theme='dark'] .lead {
+    color: var(--text-secondary);
+}
+
+[data-theme='dark'] .story h2,
+[data-theme='dark'] .values h2 {
+    color: var(--text-primary);
+}
+
+[data-theme='dark'] .story p {
+    color: var(--text-secondary);
+}
+
+[data-theme='dark'] .valueCard {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border);
+}
+
+[data-theme='dark'] .valueCard h3 {
+    color: var(--text-primary);
+}
+
+[data-theme='dark'] .valueCard p {
+    color: var(--text-secondary);
+}
