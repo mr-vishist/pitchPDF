@@ -11,6 +11,10 @@ export default function PaywallModal({ isOpen, onClose, onPaymentSuccess, userId
     const handlePurchase = async (type) => {
         setLoading(true);
         try {
+            /*
+            // --- Razorpay Implementation (Temporarily Disabled) ---
+            // Requires RAZORPAY_KEY_ID and RAZORPAY_KEY_SECRET env vars
+
             // Load Razorpay Script
             const res = await loadScript('https://checkout.razorpay.com/v1/checkout.js');
             if (!res) {
@@ -43,9 +47,7 @@ export default function PaywallModal({ isOpen, onClose, onPaymentSuccess, userId
                 key: keyId,
                 name: 'pitchPDF',
                 description: type === 'single' ? 'Single PDF Generation' : 'Unlimited Subscription',
-                // image: '/logo.png', // Add logo if available
 
-                // For subscription, use subscription_id. For one-time, use order_id + amount.
                 ...(type === 'single'
                     ? { amount: amount.toString(), currency: currency, order_id: orderId }
                     : { subscription_id: subscriptionId }
@@ -75,10 +77,6 @@ export default function PaywallModal({ isOpen, onClose, onPaymentSuccess, userId
                         alert('Payment verification failed. Please contact support.');
                     }
                 },
-                prefill: {
-                    // email: userEmail, // We could pass this if we had it
-                    // contact: ''
-                },
                 theme: {
                     color: '#10b981'
                 }
@@ -86,9 +84,29 @@ export default function PaywallModal({ isOpen, onClose, onPaymentSuccess, userId
 
             const paymentObject = new window.Razorpay(options);
             paymentObject.open();
+            // -----------------------------------------------------
+            */
+
+            // --- Mock Payment Implementation (Active) ---
+            // Uses /api/mock-payment which requires no external keys
+            const response = await fetch('/api/mock-payment', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ uid: userId, type })
+            });
+
+            const data = await response.json();
+
+            if (data.success) {
+                // Mock payment successful
+                onPaymentSuccess();
+                onClose();
+            } else {
+                alert('Payment failed: ' + (data.error || 'Unknown error'));
+            }
 
         } catch (error) {
-            console.error('Payment Initialization Error:', error);
+            console.error('Payment Error:', error);
             alert('Something went wrong. Please try again.');
         } finally {
             setLoading(false);
