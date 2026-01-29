@@ -40,57 +40,73 @@ export default function PaywallModal({ isOpen, onClose, onPaymentSuccess, userId
 
             // 2. Open Razorpay
             const options = {
-                key: keyId,
-                name: 'pitchPDF',
+                key: keyId, // Key returned from backend (or env)
+                name: 'PitchPDF',
                 description: type === 'single' ? 'Single PDF Generation' : 'Unlimited Subscription',
-                // image: '/logo.png', // Add logo if available
-
-                // For subscription, use subscription_id. For one-time, use order_id + amount.
-                ...(type === 'single'
+                image: '/logo.png', // Ensure this exists or use text
+                ... (type === 'single'
                     ? { amount: amount.toString(), currency: currency, order_id: orderId }
                     : { subscription_id: subscriptionId }
                 ),
 
+                // Handler for SUCCESS
                 handler: async function (response) {
-                    // 3. Verify on Backend
-                    const verifyRes = await fetch('/api/rzp-verify', {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({
-                            userId,
-                            paymentType: type === 'single' ? 'order' : 'subscription',
-                            razorpay_payment_id: response.razorpay_payment_id,
-                            razorpay_order_id: response.razorpay_order_id,
-                            razorpay_signature: response.razorpay_signature,
-                            razorpay_subscription_id: response.razorpay_subscription_id
-                        })
-                    });
+                    try {
+                        // 3. Verify on Backend
+                        const verifyRes = await fetch('/api/rzp-verify', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({
+                                userId,
+                                paymentType: type === 'single' ? 'order' : 'subscription',
+                                razorpay_payment_id: response.razorpay_payment_id,
+                                razorpay_order_id: response.razorpay_order_id,
+                                razorpay_signature: response.razorpay_signature,
+                                razorpay_subscription_id: response.razorpay_subscription_id
+                            })
+                        });
 
-                    const verifyData = await verifyRes.json();
+                        const verifyData = await verifyRes.json();
 
-                    if (verifyData.success) {
-                        onPaymentSuccess();
-                        onClose();
-                    } else {
-                        alert('Payment verification failed. Please contact support.');
+                        if (verifyData.success) {
+                            onPaymentSuccess();
+                            onClose();
+                        } else {
+                            alert('Payment verification failed: ' + (verifyData.error || 'Unknown error'));
+                        }
+                    } catch (err) {
+                        console.error('Verification Request Failed:', err);
+                        alert('Network error during verification. Please contact support if money was deducted.');
                     }
                 },
                 prefill: {
-                    // email: userEmail, // We could pass this if we had it
-                    // contact: ''
+                    // email: userEmail,
+                    // contact: userPhone
                 },
                 theme: {
                     color: '#10b981'
+                },
+                modal: {
+                    ondismiss: function () {
+                        setLoading(false);
+                    }
                 }
             };
 
             const paymentObject = new window.Razorpay(options);
+
+            // Handler for FAILURE
+            paymentObject.on('payment.failed', function (response) {
+                console.error('Payment Failed:', response.error);
+                alert(`Payment Failed: ${response.error.description || response.error.reason}`);
+                setLoading(false);
+            });
+
             paymentObject.open();
 
         } catch (error) {
             console.error('Payment Initialization Error:', error);
-            alert('Something went wrong. Please try again.');
-        } finally {
+            alert('Something went wrong initializing payment. Please try again.');
             setLoading(false);
         }
     };
