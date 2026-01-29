@@ -66,16 +66,16 @@
 
 /* Premium/Unlimited Card Styling */
 .premiumCard {
-    background: #000;
+    background: linear-gradient(135deg, #064e3b 0%, #10b981 100%);
     color: white;
-    border: 1px solid #000;
+    border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 /* In dark mode, keep it distinct or blend? 
    If we want it to always be black/distinct: */
 [data-theme='dark'] .premiumCard {
-    background: linear-gradient(135deg, #111827 0%, #000 100%);
-    border: 1px solid #374151;
+    background: linear-gradient(135deg, #022c22 0%, #065f46 100%);
+    border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .premiumCard .cardTitle,
@@ -103,7 +103,9 @@
 }
 
 .premiumButton:hover {
-    opacity: 0.9;
+    background: #f0fdf4;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 .section {
