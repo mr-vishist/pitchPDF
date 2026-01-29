@@ -12,9 +12,32 @@
     border-radius: var(--space-base);
     padding: var(--space-lg);
     width: 100%;
-    max-width: 420px;
+    /* Fluid width with upper bound */
+    max-width: min(100%, 420px);
     box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
     border: 1px solid var(--border);
+}
+
+@media (max-width: 480px) {
+    .container {
+        padding: var(--space-sm);
+    }
+
+    .card {
+        padding: var(--space-base);
+        border: none;
+        box-shadow: none;
+        background: transparent;
+    }
+
+    .logo {
+        justify-content: center;
+    }
+
+    .title,
+    .subtitle {
+        text-align: center;
+    }
 }
 
 .logo {

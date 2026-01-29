@@ -1,9 +1,14 @@
+'use client';
+
+import { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import ThemeToggle from '@/components/ThemeToggle';
 import styles from './page.module.css';
 
 export default function LandingPage() {
+    const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
     return (
         <div className={styles.landing}>
             {/* Navigation */}
@@ -14,15 +19,21 @@ export default function LandingPage() {
                             <Image src="/favicon.svg" alt="pitchPDF" width={32} height={32} className={styles.logoIcon} />
                             <span>pitchPDF</span>
                         </Link>
-                        <ul className={styles.navLinks}>
+                        <ul className={`${styles.navLinks} ${mobileMenuOpen ? styles.active : ''}`}>
                             <li><Link href="/">Home</Link></li>
                             <li><Link href="/about">About</Link></li>
                             <li><Link href="/services">Services</Link></li>
-
                         </ul>
                         <div className={styles.navActions}>
                             <ThemeToggle />
                             <Link href="/signup" className="btn btn-primary">Get Started</Link>
+                            <button
+                                className={styles.mobileMenuBtn}
+                                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                                aria-label="Toggle mobile menu"
+                            >
+                                {mobileMenuOpen ? '✕' : '☰'}
+                            </button>
                         </div>
                     </div>
                 </div>

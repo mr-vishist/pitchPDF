@@ -138,7 +138,7 @@ export default function PaywallModal({ isOpen, onClose, onPaymentSuccess, userId
                 </div>
 
                 <p style={{ textAlign: 'center', fontSize: '0.8rem', color: '#999' }}>
-                    {loading ? 'Processing payment...' : 'Secure payment via MockPay'}
+                    {loading ? 'Processing payment...' : 'Secure payment via Razorpay'}
                 </p>
             </div>
         </div>

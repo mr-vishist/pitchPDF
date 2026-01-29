@@ -21,6 +21,13 @@ export default function AuthenticatedLayout({ children, title, subtitle, actions
         setMounted(true);
     }, []);
 
+    const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+    // Close mobile menu when route changes
+    useEffect(() => {
+        setIsMobileMenuOpen(false);
+    }, [pathname]);
+
     const handleLogout = async () => {
         try {
             await signOut(auth);
@@ -43,8 +50,14 @@ export default function AuthenticatedLayout({ children, title, subtitle, actions
 
     return (
         <div className={styles.layout}>
+            {/* Mobile Backdrop */}
+            <div
+                className={`${styles.backdrop} ${isMobileMenuOpen ? styles.visible : ''}`}
+                onClick={() => setIsMobileMenuOpen(false)}
+            />
+
             {/* Sidebar */}
-            <aside className={styles.sidebar}>
+            <aside className={`${styles.sidebar} ${isMobileMenuOpen ? styles.open : ''}`}>
                 <div className={styles.sidebarHeader}>
                     <div className={styles.logo}>
                         <span className={styles.logoIcon}></span>
@@ -91,6 +104,14 @@ export default function AuthenticatedLayout({ children, title, subtitle, actions
             <div className={styles.mainWrapper}>
                 {/* Header */}
                 <header className={styles.header}>
+                    <button
+                        className={styles.hamburgerBtn}
+                        onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                        aria-label="Toggle menu"
+                    >
+                        ☰
+                    </button>
+
                     <div className={styles.searchBar}>
                         <span className={styles.searchIcon}>🔍</span>
                         <input

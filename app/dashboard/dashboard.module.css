@@ -454,18 +454,137 @@
 }
 
 /* Responsive */
-@media (max-width: 1200px) {
-    .contentGrid {
-        grid-template-columns: 1fr 1fr;
+@media (min-width: 1024px) {
+    /* Desktop-only adjustments if needed */
+}
+
+@media (max-width: 1024px) {
+
+    /* Sidebar becomes a drawer */
+    .sidebar {
+        transform: translateX(-100%);
+        transition: transform 0.3s ease-in-out;
+        z-index: 1000;
+        box-shadow: none;
+    }
+
+    .sidebar.open {
+        transform: translateX(0);
+        box-shadow: 4px 0 24px rgba(0, 0, 0, 0.15);
+    }
+
+    /* Remove fixed margin */
+    .mainWrapper {
+        margin-left: 0;
+    }
+
+    /* Adjust Header */
+    .header {
+        position: sticky;
+        top: 0;
+        z-index: 900;
+        gap: var(--space-base);
+    }
+
+    /* Mobile Search Bar */
+    .searchBar {
+        width: 100%;
+        max-width: 100%;
+        flex: 1;
+    }
+
+    /* Reduce main padding on tablet/mobile */
+    .main {
+        padding: var(--space-base);
     }
 }
 
-@media (max-width: 900px) {
+/* Mobile Specific (Phone) */
+@media (max-width: 768px) {
+    .header {
+        padding: var(--space-base);
+        flex-wrap: wrap;
+    }
+
+    .headerRight {
+        margin-left: auto;
+    }
+
+    /* Further reduce padding for small screens if needed */
+    .main {
+        padding: var(--space-sm);
+    }
+
+    .searchBar {
+        order: 3;
+        width: 100%;
+        margin-top: var(--space-sm);
+    }
+
     .statsGrid {
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: 1fr;
     }
 
     .contentGrid {
         grid-template-columns: 1fr;
+    }
+
+    .pageHeader {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: var(--space-base);
+    }
+
+    .pageActions {
+        width: 100%;
+    }
+
+    .primaryButton,
+    .secondaryButton {
+        flex: 1;
+        text-align: center;
+    }
+
+    .userDetails {
+        display: none;
+        /* Hide name/email on small screens to save space */
+    }
+}
+
+/* Mobile Sidebar Backdrop */
+.backdrop {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.4);
+    z-index: 950;
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+}
+
+.backdrop.visible {
+    display: block;
+    opacity: 1;
+}
+
+/* Hamburger Menu Button */
+.hamburgerBtn {
+    display: none;
+    background: transparent;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    color: var(--text-primary);
+    padding: var(--space-sm);
+    margin-left: -8px;
+}
+
+@media (max-width: 1024px) {
+    .hamburgerBtn {
+        display: flex;
+        align-items: center;
     }
 }

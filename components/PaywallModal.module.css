@@ -15,9 +15,11 @@
 .modal {
     background: var(--bg-primary);
     border-radius: 16px;
-    padding: 2rem;
-    width: 90%;
-    max-width: 500px;
+    padding: 2.5rem 2rem 2rem;
+    /* Increased top padding for content breathing room */
+    width: 95%;
+    max-width: 650px;
+    /* Further increased to accommodate full text */
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
     animation: slideUp 0.3s ease-out;
     position: relative;
@@ -26,27 +28,39 @@
 
 .closeButton {
     position: absolute;
-    top: 1rem;
-    right: 1rem;
+    top: 1.25rem;
+    right: 1.25rem;
     background: none;
     border: none;
-    font-size: 1.5rem;
+    font-size: 1.75rem;
+    /* Slightly larger for easier clicking */
     cursor: pointer;
     color: var(--text-muted);
-    padding: 0.5rem;
+    padding: 0.25rem;
     line-height: 1;
+    transition: color 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
 }
 
 .closeButton:hover {
     color: var(--text-primary);
+    background: var(--bg-secondary);
 }
 
 .title {
-    font-size: 1.5rem;
+    font-size: clamp(1.1rem, 4vw, 1.5rem);
+    /* Responsive font size to prevent overflow */
     font-weight: 700;
     margin-bottom: 0.5rem;
     text-align: center;
     color: var(--text-primary);
+    white-space: nowrap;
+    padding: 0 1rem;
 }
 
 .subtitle {

@@ -67,6 +67,22 @@
     gap: var(--space-base);
 }
 
+/* Mobile Menu Button */
+.mobileMenuBtn {
+    display: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: var(--space-sm);
+    font-size: 24px;
+    color: var(--teal-dark);
+    line-height: 1;
+}
+
+.mobileMenuBtn:hover {
+    color: var(--primary);
+}
+
 
 /* Hero Section */
 .hero {
@@ -81,12 +97,14 @@
 }
 
 .heroTitle {
-    font-size: 56px;
+    font-size: clamp(2rem, 5vw + 1rem, 56px);
     font-weight: var(--fw-bold);
     color: #1a1a1a;
     margin-bottom: var(--space-md);
     line-height: 1.1;
     animation: fadeInUp 0.8s ease-out;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
 }
 
 .heroSubtitle {
@@ -161,7 +179,7 @@
 
 .sectionTitle {
     text-align: center;
-    font-size: 42px;
+    font-size: clamp(1.75rem, 4vw + 0.5rem, 42px);
     font-weight: var(--fw-bold);
     margin-bottom: var(--space-major);
     color: inherit;
@@ -545,33 +563,97 @@
 }
 
 /* Responsive Design */
-@media (max-width: 968px) {
-    .navContent {
-        flex-direction: column;
-        gap: var(--space-base);
-    }
 
-    .heroTitle {
-        font-size: 42px;
-    }
-
+/* Tablet - 1024px */
+@media (max-width: 1024px) {
     .statsGrid {
         grid-template-columns: repeat(2, 1fr);
     }
 
     .benefitsGrid {
         grid-template-columns: 1fr;
+        gap: var(--space-lg);
+    }
+
+    .benefitsContent h2 {
+        font-size: clamp(1.5rem, 3vw + 0.5rem, 36px);
     }
 
     .footerGrid {
         grid-template-columns: 1fr 1fr;
         gap: var(--space-lg);
     }
+
+    .chartPlaceholder {
+        height: 300px;
+    }
 }
 
-@media (max-width: 640px) {
-    .heroTitle {
-        font-size: 32px;
+/* Mobile - 768px */
+@media (max-width: 768px) {
+    .mobileMenuBtn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .navContent {
+        flex-wrap: wrap;
+        justify-content: space-between;
+    }
+
+    .navLinks {
+        display: flex;
+        width: 100%;
+        order: 3;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        overflow: hidden;
+
+        /* Initial State (Closed) */
+        max-height: 0;
+        opacity: 0;
+        margin-top: 0;
+        padding-top: 0;
+        border-top: 1px solid transparent;
+
+        /* Smooth Transition */
+        transition: all 0.3s ease-in-out;
+    }
+
+    .navLinks.active {
+        /* Active State (Open) */
+        max-height: 300px;
+        /* Large enough to fit content */
+        opacity: 1;
+        margin-top: var(--space-base);
+        padding-top: var(--space-base);
+        border-top-color: var(--gray-medium);
+        gap: var(--space-sm);
+    }
+
+    .navActions {
+        gap: var(--space-sm);
+    }
+
+    .hero {
+        padding: var(--space-lg) 0;
+    }
+
+    .heroContent {
+        margin-bottom: var(--space-lg);
+    }
+
+    .heroCta {
+        flex-direction: column;
+        align-items: stretch;
+        gap: var(--space-sm);
+    }
+
+    .heroCta .btn {
+        width: 100%;
+        text-align: center;
     }
 
     .statsGrid {
@@ -588,12 +670,81 @@
 
     .footerGrid {
         grid-template-columns: 1fr;
+        text-align: center;
     }
 
-    .navLinks {
-        flex-direction: column;
-        gap: var(--space-sm);
+    .footerBrand {
         text-align: center;
+    }
+
+    .footerLinks {
+        text-align: center;
+    }
+
+    .footerBottom {
+        flex-direction: column;
+        gap: var(--space-base);
+        text-align: center;
+    }
+
+    .ctaContent h2 {
+        font-size: clamp(1.5rem, 4vw + 0.5rem, 42px);
+    }
+
+    .benefitsContent h2 {
+        font-size: clamp(1.25rem, 3vw + 0.5rem, 32px);
+    }
+
+    .chartPlaceholder {
+        height: 250px;
+    }
+
+    .barChart {
+        height: 200px;
+    }
+}
+
+/* Small Mobile - 480px */
+@media (max-width: 480px) {
+    .hero {
+        padding: var(--space-md) 0;
+    }
+
+    .heroSubtitle {
+        font-size: var(--body);
+    }
+
+    .serviceCard {
+        padding: var(--space-base);
+    }
+
+    .pricingCard {
+        padding: var(--space-base);
+    }
+
+    .priceAmount {
+        font-size: 36px;
+    }
+
+    .statNumber {
+        font-size: 36px;
+    }
+
+    .statBadgeNumber {
+        font-size: 24px;
+    }
+
+    .chartPlaceholder {
+        height: 200px;
+        padding: var(--space-base);
+    }
+
+    .barChart {
+        height: 150px;
+    }
+
+    .logo span {
+        font-size: 20px;
     }
 }
 

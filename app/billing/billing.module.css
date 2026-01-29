@@ -219,3 +219,79 @@
 .historyRow:last-child {
     border-bottom: none;
 }
+
+@media (max-width: 768px) {
+    .grid {
+        grid-template-columns: 1fr;
+    }
+
+    .planBanner {
+        flex-direction: column;
+        align-items: stretch;
+        /* Stretch to fill width */
+        padding: 1.5rem;
+        /* Reduced padding */
+    }
+
+    .card {
+        padding: 1.5rem;
+        /* Reduced padding */
+    }
+
+    .planActions {
+        width: 100%;
+        margin-top: 1rem;
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    .upgradeButton,
+    .cancelButton {
+        width: 100%;
+        text-align: center;
+        box-sizing: border-box;
+        /* Ensure padding doesn't cause overflow */
+    }
+
+    /* Stack History Table for Mobile */
+    .historyHeader {
+        display: none;
+        /* Hide header on mobile */
+    }
+
+    .historyRow {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+        padding: 1rem;
+        align-items: flex-start;
+    }
+
+    .historyRow span {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+    }
+
+    .historyRow span::before {
+        content: attr(data-label);
+        /* Requires data-label attr in JSX or just labels here */
+        font-weight: 600;
+        color: var(--text-secondary);
+        font-size: 0.85rem;
+        display: block;
+        /* Fallback if no attr, actually we need to edit JSX to add labels or just use static text here if we knew the columns */
+    }
+
+    /* Since we can't easily add data-attributes to the JSX without editing it, 
+       we'll make the table scrollable horizontally instead for now as a safer refactor 
+       OR just stack the known columns if they are simple. */
+}
+
+/* Ensure no residual min-width forces overflow */
+.historyHeader,
+.historyRow {
+    min-width: 0;
+    width: 100%;
+}

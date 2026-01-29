@@ -152,10 +152,10 @@ export default function BillingPage() {
                     </div>
                     {/* Static placeholder for now as requested by user flow "Payment History" but backend support not fully built yet */}
                     <div className={styles.historyRow}>
-                        <span>{new Date().toLocaleDateString()}</span>
-                        <span>{isSubscribed ? 'Pro Subscription' : (credits > 0 ? 'Single PDF Credit' : 'No payments yet')}</span>
-                        <span>{isSubscribed ? '₹299.00' : (credits > 0 ? '₹99.00' : '-')}</span>
-                        <span>{isSubscribed || credits > 0 ? 'Paid' : '-'}</span>
+                        <span data-label="Date">{new Date().toLocaleDateString()}</span>
+                        <span data-label="Description">{isSubscribed ? 'Pro Subscription' : (credits > 0 ? 'Single PDF Credit' : 'No payments yet')}</span>
+                        <span data-label="Amount">{isSubscribed ? '₹299.00' : (credits > 0 ? '₹99.00' : '-')}</span>
+                        <span data-label="Status">{isSubscribed || credits > 0 ? 'Paid' : '-'}</span>
                     </div>
                 </div>
             </div>
