@@ -32,7 +32,7 @@ export async function getUserEntitlement(uid) {
         return { allowed: false, reason: 'none' };
     } catch (error) {
         console.error('Error checking entitlement:', error);
-        return { allowed: false, reason: 'error' };
+        return { allowed: false, reason: 'error', details: error.message };
     }
 }
 
