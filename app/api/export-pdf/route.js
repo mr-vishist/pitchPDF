@@ -15,6 +15,9 @@ export async function POST(request) {
         const entitlement = await getUserEntitlement(uid);
 
         if (!entitlement.allowed) {
+            if (entitlement.reason === 'error') {
+                return NextResponse.json({ error: 'System error: ' + (entitlement.details || 'Unknown error') }, { status: 500 });
+            }
             return NextResponse.json({ error: 'Payment required' }, { status: 403 });
         }
 
