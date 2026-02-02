@@ -1,5 +1,5 @@
-import { db } from '../firebase/firebase';
-import { doc, getDoc, updateDoc, setDoc, increment } from 'firebase/firestore';
+import { db } from '../firebase/admin';
+import { FieldValue } from 'firebase-admin/firestore';
 
 /**
  * Checks if a user has access to generate a PDF.
@@ -10,10 +10,10 @@ export async function getUserEntitlement(uid) {
     if (!uid) return { allowed: false, reason: 'none' };
 
     try {
-        const userRef = doc(db, 'users', uid);
-        const userSnap = await getDoc(userRef);
+        const userRef = db.collection('users').doc(uid);
+        const userSnap = await userRef.get();
 
-        if (!userSnap.exists()) {
+        if (!userSnap.exists) {
             return { allowed: false, reason: 'none' };
         }
 
@@ -43,9 +43,9 @@ export async function getUserEntitlement(uid) {
  */
 export async function consumeCredit(uid) {
     try {
-        const userRef = doc(db, 'users', uid);
-        await updateDoc(userRef, {
-            credits: increment(-1)
+        const userRef = db.collection('users').doc(uid);
+        await userRef.update({
+            credits: FieldValue.increment(-1)
         });
         return true;
     } catch (error) {
@@ -60,10 +60,10 @@ export async function consumeCredit(uid) {
  * @param {number} amount 
  */
 export async function addCredits(uid, amount) {
-    const userRef = doc(db, 'users', uid);
-    // Use setDoc with merge to ensure document exists
-    await setDoc(userRef, {
-        credits: increment(amount)
+    const userRef = db.collection('users').doc(uid);
+    // Use set with merge to ensure document exists
+    await userRef.set({
+        credits: FieldValue.increment(amount)
     }, { merge: true });
 }
 
@@ -73,7 +73,7 @@ export async function addCredits(uid, amount) {
  * @param {string} status 'active' | 'inactive' | 'past_due'
  */
 export async function setSubscriptionStatus(uid, status, subscriptionId = null) {
-    const userRef = doc(db, 'users', uid);
+    const userRef = db.collection('users').doc(uid);
     const updateData = {
         subscriptionStatus: status,
         subscriptionPlan: status === 'active' ? 'pro' : 'free'
@@ -83,5 +83,5 @@ export async function setSubscriptionStatus(uid, status, subscriptionId = null) 
         updateData.razorpaySubscriptionId = subscriptionId;
     }
 
-    await setDoc(userRef, updateData, { merge: true });
+    await userRef.set(updateData, { merge: true });
 }
