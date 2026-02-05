@@ -22,6 +22,7 @@
   "homepage": "https://github.com/mr-vishist/pitchPDF#readme",
   "dependencies": {
     "firebase": "^12.8.0",
+    "firebase-admin": "^13.6.1",
     "next": "^16.1.4",
     "pdf-lib": "^1.17.1",
     "pdfkit": "^0.17.2",
