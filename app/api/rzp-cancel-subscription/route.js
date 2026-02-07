@@ -1,8 +1,7 @@
 import { NextResponse } from 'next/server';
 import Razorpay from 'razorpay';
 import { setSubscriptionStatus } from '@/services/userService';
-import { db } from '@/firebase/firebase';
-import { doc, getDoc } from 'firebase/firestore';
+import { db } from '@/firebase/admin.js';
 
 export async function POST(request) {
     try {
@@ -18,10 +17,9 @@ export async function POST(request) {
         });
 
         // 1. Get User's Subscription ID
-        const userRef = doc(db, 'users', uid);
-        const userSnap = await getDoc(userRef);
+        const userSnap = await db.collection('users').doc(uid).get();
 
-        if (!userSnap.exists()) {
+        if (!userSnap.exists) {
             return NextResponse.json({ error: 'User not found' }, { status: 404 });
         }
 
