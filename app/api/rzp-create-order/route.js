@@ -1,6 +1,5 @@
 import { NextResponse } from 'next/server';
 import Razorpay from 'razorpay';
-import { db } from '@/firebase/firebase'; // Ensure connection is fine, though not used here directly
 
 export async function POST(request) {
     try {
